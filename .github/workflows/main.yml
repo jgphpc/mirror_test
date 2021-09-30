@@ -26,7 +26,8 @@ jobs:
     - name: trigger gitlab
       uses: appleboy/gitlab-ci-action@master
       with:
-        url: "https://git.scicore.unibas.ch/j.piccinali/mirror_test"
+        host: "https://git.scicore.unibas.ch"
         token: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
         debug: true
         project_id: 1866
+        ref: "main"
