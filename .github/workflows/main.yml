@@ -61,34 +61,65 @@ on: [push]
 # {{{ adityakavalur/github-gitlab-ci
 # # name: Mirror commits
 # # on: workflow_dispatch
-jobs:
-  pushmirror:
-    runs-on: ubuntu-latest
-    env:
-      SOURCE_REPO: jgphpc/mirror_test
-      # <namespace>/<repo_name>
-      TARGET_REPO: "https://git.scicore.unibas.ch/j.piccinali/mirror_test.git"
-      # "<complete url e.g. https://gitlab.com/namespace/repository.git>"
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          repository: ${{ env.SOURCE_REPO }}
-          token: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
-          # token: ${{ secrets.SOURCE_PAT }}
-          fetch-depth: 0
-      - name: Push testing on external Gitlab
-        uses: adityakavalur/github-gitlab-ci@v0.1.1
-        with:
-          args: ${{ env.TARGET_REPO }}
-        env:
-          # TARGET_PAT: ${{ secrets.TARGET_PAT }}
-          # SOURCE_PAT: ${{ secrets.SOURCE_PAT }}
-          # GITHUB_TOKEN: ${{ secrets.SOURCE_PAT }}
-          TARGET_PAT: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
-          SOURCE_PAT: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
-          # POLL_TIMEOUT: "<Optional, value in seconds, default is 10 seconds>"
-          REPO_EVENT_TYPE: push
-          BRANCH: main
-          # APPROVAL_STRING: <Optional, approval comment that authorizes commits by non-approved users>
+# jobs:
+#   pushmirror:
+#     runs-on: ubuntu-latest
+#     env:
+#       SOURCE_REPO: jgphpc/mirror_test
+#       # <namespace>/<repo_name>
+#       TARGET_REPO: "https://git.scicore.unibas.ch/j.piccinali/mirror_test.git"
+#       # "<complete url e.g. https://gitlab.com/namespace/repository.git>"
+#     steps:
+#       - uses: actions/checkout@v2
+#         with:
+#           repository: ${{ env.SOURCE_REPO }}
+#           token: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
+#           # token: ${{ secrets.SOURCE_PAT }}
+#           fetch-depth: 0
+#       - name: Push testing on external Gitlab
+#         uses: adityakavalur/github-gitlab-ci@v0.1.1
+#         with:
+#           args: ${{ env.TARGET_REPO }}
+#         env:
+#           # TARGET_PAT: ${{ secrets.TARGET_PAT }}
+#           # SOURCE_PAT: ${{ secrets.SOURCE_PAT }}
+#           # GITHUB_TOKEN: ${{ secrets.SOURCE_PAT }}
+#           TARGET_PAT: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
+#           SOURCE_PAT: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
+#           GITHUB_TOKEN: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
+#           # POLL_TIMEOUT: "<Optional, value in seconds, default is 10 seconds>"
+#           REPO_EVENT_TYPE: push
+#           BRANCH: main
+#           # APPROVAL_STRING: <Optional, approval comment that authorizes commits by non-approved users>
+# }}} 
+
+# MIRRORING:
+# {{{ https://github.com/marketplace/actions/mirroring-repository needs.ssh :-(
+# # name: Mirroring
+# # on: [push, delete]
+# jobs:
+#   to_gitlab:
+#     runs-on: ubuntu-18.04
+#     steps:
+#     # - uses: actions/checkout@v1
+#     - uses: actions/checkout@v2
+#     - uses: pixta-dev/repository-mirroring-action@v1
+#       with:
+#         target_repo_url:
+#           # https://git.scicore.unibas.ch/j.piccinali/mirror_test.git
+#           # git@gitlab.com:<username>/<target_repository_name>.git
+#         ssh_private_key:
+#           ${{ secrets.GITLAB_SSH_PRIVATE_KEY }}
+# }}}
+
+# {{{ https://github.com/marketplace/actions/mirror-repository
+on: [push]
+  steps:
+    - uses: actions/checkout@v2
+    - uses: spyoungtech/mirror-action@master
+      with:
+        # REMOTE: 'https://gitlab.com/spyoungtech/mirror-action.git'
+        REMOTE: 'https://git.scicore.unibas.ch/j.piccinali/mirror_test.git'
+        GIT_USERNAME: j.piccinali
+        GIT_PASSWORD: ${{ secrets.GITLAB_PASSWORD }}
 # }}}
