@@ -27,10 +27,10 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     # - uses: actions/checkout@v2
     - name: block_merging
-      run:
-        - uname -a
-        - echo GITHUB_RUN_ID=$GITHUB_RUN_ID
-        - echo GITHUB_SHA=$GITHUB_SHA
+      run: |
+        uname -a
+        echo GITHUB_RUN_ID=$GITHUB_RUN_ID
+        echo GITHUB_SHA=$GITHUB_SHA
     # - name: env
     #   uses: managedkaos/print-env@master
 #     - name: trigger gitlab
