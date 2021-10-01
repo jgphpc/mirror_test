@@ -25,7 +25,8 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     # - uses: actions/checkout@v2
-    - name: env
+    # https://github.com/marketplace/actions/environment-printer
+    - name: print env variables
       uses: managedkaos/print-env@master
     - name: trigger gitlab
       uses: appleboy/gitlab-ci-action@master
