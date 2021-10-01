@@ -17,7 +17,7 @@ on: [push]
 # }}}
 
 # TRIGGER:
-# {{{ appleboy/gitlab-ci-action
+# {{{ https://github.com/marketplace/actions/trigger-gitlab-ci
 jobs:
   trigger:
     name: Trigger
