@@ -32,7 +32,7 @@ jobs:
         token: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
         debug: true
         project_id: 1866
-        ref: "main"
+        # ref: "main"
 # }}}
 
 # {{{ SvanBoxel/gitlab-mirror-and-ci-action
