@@ -25,6 +25,8 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     # - uses: actions/checkout@v2
+    - name: env
+      uses: managedkaos/print-env@master
     - name: trigger gitlab
       uses: appleboy/gitlab-ci-action@master
       with:
@@ -32,7 +34,7 @@ jobs:
         token: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
         debug: true
         project_id: 1866
-        # ref: "main"
+        ref: "main"
 # }}}
 
 # {{{ SvanBoxel/gitlab-mirror-and-ci-action
