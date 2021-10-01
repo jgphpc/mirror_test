@@ -65,7 +65,8 @@ jobs:
   pushmirror:
     runs-on: ubuntu-latest
     env:
-      SOURCE_REPO: jgphpc/mirror_test
+      SOURCE_REPO: "https://github.com/jgphpc/mirror_test.git"
+      # jgphpc/mirror_test
       # <namespace>/<repo_name>
       TARGET_REPO: "https://git.scicore.unibas.ch/j.piccinali/mirror_test.git"
       # "<complete url e.g. https://gitlab.com/namespace/repository.git>"
