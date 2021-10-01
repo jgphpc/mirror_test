@@ -141,6 +141,7 @@ jobs:
         with:
           originalURL: https://github.com/jgphpc/mirror_test.git
           mirrorURL: https://git.scicore.unibas.ch/j.piccinali/mirror_test.git
-          pat: ${{ secrets.GITLAB_PASSWORD }}
+          pat: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
+          # pat: ${{ secrets.GITLAB_PASSWORD }}
 
 # }}}
