@@ -31,6 +31,7 @@ jobs:
         uname -a
         echo GITHUB_RUN_ID=$GITHUB_RUN_ID
         echo GITHUB_SHA=$GITHUB_SHA
+        echo "@branch@=${{ github.ref }}"
     # - name: env
     #   uses: managedkaos/print-env@master
 #     - name: trigger gitlab
