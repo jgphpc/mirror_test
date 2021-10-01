@@ -1,6 +1,6 @@
 name: trigger gitlab at unibas
 on: [push]
-#on:
+# {{{ on:
 #  # Triggers the workflow on push or pull request events but only for the main branch
 #  push:
 #    branches: [ main ]
@@ -14,24 +14,25 @@ on: [push]
 #        run: |
 #          echo Add other actions to build,
 #          echo test, and deploy your project.
+# }}}
 
 # TRIGGER:
 # {{{ appleboy/gitlab-ci-action
-# jobs:
-#   build:
-#     name: Build
-#     runs-on: ubuntu-latest
-#     steps:
-#     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-#     # - uses: actions/checkout@v2
-#     - name: trigger gitlab
-#       uses: appleboy/gitlab-ci-action@master
-#       with:
-#         host: "https://git.scicore.unibas.ch"
-#         token: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
-#         debug: true
-#         project_id: 1866
-#         ref: "main"
+jobs:
+  trigger:
+    name: Trigger
+    runs-on: ubuntu-latest
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    # - uses: actions/checkout@v2
+    - name: trigger gitlab
+      uses: appleboy/gitlab-ci-action@master
+      with:
+        host: "https://git.scicore.unibas.ch"
+        token: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
+        debug: true
+        project_id: 1866
+        ref: "main"
 # }}}
 
 # {{{ SvanBoxel/gitlab-mirror-and-ci-action
@@ -127,21 +128,20 @@ on: [push]
 #           GIT_PASSWORD: ${{ secrets.GITLAB_PASSWORD }}
 # }}}
 
-# {{{ https://github.com/marketplace/actions/git-mirror-action
-# name: Example
-# on: 
-#   schedule:
-#     - cron: '0 0 1-31 * *'
-jobs:
-  mirror:
-    runs-on: ubuntu-latest
-    steps:
-      - name: mirror
-        uses: mathisve/git-mirror-action@latest
-        with:
-          originalURL: https://github.com/jgphpc/mirror_test.git
-          mirrorURL: https://git.scicore.unibas.ch/j.piccinali/mirror_test.git
-          pat: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
-          # pat: ${{ secrets.GITLAB_PASSWORD }}
-
+# {{{ https://github.com/marketplace/actions/git-mirror-action no :-(
+# # name: Example
+# # on: 
+# #   schedule:
+# #     - cron: '0 0 1-31 * *'
+# jobs:
+#   mirror:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: mirror
+#         uses: mathisve/git-mirror-action@latest
+#         with:
+#           originalURL: https://github.com/jgphpc/mirror_test.git
+#           mirrorURL: https://git.scicore.unibas.ch/j.piccinali/mirror_test.git
+#           pat: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
+#           # pat: ${{ secrets.GITLAB_PASSWORD }}
 # }}}
