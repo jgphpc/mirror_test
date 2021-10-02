@@ -36,7 +36,7 @@ jobs:
     - name: Dump for jg
       run: |
         echo "01 ${{ github.ref }}"
-        echo "01 $GITHUB_CONTEXT_SHA"
+        echo "01 $GITHUB_SHA"
     #
     # - name: env
     #   uses: managedkaos/print-env@master
