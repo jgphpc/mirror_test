@@ -46,6 +46,7 @@ jobs:
     - name: Dump for jg
       run: |
         echo "sha=${{ github.sha }}"
+        "sha=${{ github.sha }}"
 #     - name: Dump GitHub context
 #       env:
 #         GITHUB_CONTEXT: ${{ toJSON(github) }}
