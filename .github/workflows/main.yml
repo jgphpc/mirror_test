@@ -34,14 +34,39 @@ jobs:
         echo "JG_GITHUB_BRANCH=${{ github.ref }}"
     # - name: env
     #   uses: managedkaos/print-env@master
-    - name: trigger-gitlab
-      uses: appleboy/gitlab-ci-action@master
-      with:
-        host: "https://git.scicore.unibas.ch"
-        token: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
-        debug: true
-        project_id: 1866
-        ref: "main"
+#     - name: trigger-gitlab
+#       uses: appleboy/gitlab-ci-action@master
+#       with:
+#         host: "https://git.scicore.unibas.ch"
+#         token: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
+#         debug: true
+#         project_id: 1866
+#         ref: "main"
+    # https://docs.github.com/en/actions/learn-github-actions/contexts
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJSON(github) }}
+      run: echo "$GITHUB_CONTEXT"
+    - name: Dump job context
+      env:
+        JOB_CONTEXT: ${{ toJSON(job) }}
+      run: echo "$JOB_CONTEXT"
+    - name: Dump steps context
+      env:
+        STEPS_CONTEXT: ${{ toJSON(steps) }}
+      run: echo "$STEPS_CONTEXT"
+    - name: Dump runner context
+      env:
+        RUNNER_CONTEXT: ${{ toJSON(runner) }}
+      run: echo "$RUNNER_CONTEXT"
+    - name: Dump strategy context
+      env:
+        STRATEGY_CONTEXT: ${{ toJSON(strategy) }}
+      run: echo "$STRATEGY_CONTEXT"
+    - name: Dump matrix context
+      env:
+        MATRIX_CONTEXT: ${{ toJSON(matrix) }}
+      run: echo "$MATRIX_CONTEXT"
 # }}}
 
 # {{{ SvanBoxel/gitlab-mirror-and-ci-action
