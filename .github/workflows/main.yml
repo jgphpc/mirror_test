@@ -42,8 +42,19 @@ jobs:
         echo "e.after ${{ github.event.after }}"
         echo "sha $GITHUB_SHA ${{ github.sha }}"
         echo "e.repo.pulls_url ${{ github.event.repository.pulls_url }}"
-        echo "pra ${{github.event.number}}"
-        echo "prb ${{github.event.pull_request.number}}"
+        echo "github.event.number = ${{ github.event.number  }}"
+        echo "github.event.pull_request.number = ${{ github.event.pull_request.number }}"
+    # Find the PR associated with this push, if there is one.
+    - uses: jwalton/gh-find-current-pr@v1
+      id: findPr
+      with:
+        # Can be "open", "closed", or "all".  Defaults to "open".
+        state: open
+    # This will echo "Your PR is 7", or be skipped if there is no current PR.
+    - run: echo "Your PR is ${PR}"
+      if: success() && steps.findPr.outputs.number
+      env:
+        PR: ${{ steps.findPr.outputs.pr }}
 # 01 refs/heads/pr_160340
 # 02 ebd8ef7b2bdac25614956a6e5105f43edb077331
 # 03 refs/heads/pr_160340
