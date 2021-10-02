@@ -47,7 +47,8 @@ jobs:
 
     - name: Dump for jg
       run: |
-        echo "01 ${{ github.sha }}"
+        echo "01 $GITHUB_CONTEXT_SHA"
+        echo "01 $GITHUB_CONTEXT_SHA"
         # - echo "02 ${{ github.base_ref }}"
         # - echo "03 ${{ github.ref }}"
         # - echo "04 ${{ github.event.after }}"
