@@ -35,13 +35,15 @@ jobs:
     # https://docs.github.com/en/actions/learn-github-actions/contexts
     - name: Dump for jg
       run: |
-        echo "sha $GITHUB_SHA"
         echo "ref ${{ github.ref }}"
         echo "base_ref ${{ github.base_ref }}"
         echo "e.before ${{ github.event.before }}"
         echo "e.head_c.id ${{ github.event.head_commit.id }}"
         echo "e.after ${{ github.event.after }}"
+        echo "sha $GITHUB_SHA ${{ github.sha }}"
         echo "e.repo.pulls_url ${{ github.event.repository.pulls_url }}"
+        echo "pra ${{github.event.number}}"
+        echo "prb ${{github.event.pull_request.number}}"
 # 01 refs/heads/pr_160340
 # 02 ebd8ef7b2bdac25614956a6e5105f43edb077331
 # 03 refs/heads/pr_160340
