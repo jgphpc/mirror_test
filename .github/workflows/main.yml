@@ -35,14 +35,20 @@ jobs:
     # https://docs.github.com/en/actions/learn-github-actions/contexts
     - name: Dump for jg
       run: |
-        echo "01 ${{ github.ref }}"
-        echo "02 $GITHUB_SHA"
-        echo "02 ${{ github.base_ref }}"
-        echo "03 ${{ github.ref }}"
-        echo "04 ${{ github.event.after }}"
-        echo "05 ${{ github.event.before }}"
-        echo "06 ${{ github.event.head_commit.id }}"
-        echo "07 ${{ github.event.repository.pulls_url }}"
+        echo "sha $GITHUB_SHA"
+        echo "ref ${{ github.ref }}"
+        echo "base_ref ${{ github.base_ref }}"
+        echo "e.before ${{ github.event.before }}"
+        echo "e.head_c.id ${{ github.event.head_commit.id }}"
+        echo "e.after ${{ github.event.after }}"
+        echo "e.repo.pulls_url ${{ github.event.repository.pulls_url }}"
+# 01 refs/heads/pr_160340
+# 02 ebd8ef7b2bdac25614956a6e5105f43edb077331
+# 03 refs/heads/pr_160340
+# 04 ebd8ef7b2bdac25614956a6e5105f43edb077331
+# 05 ff962531810a0a90ba05f7c1ffbcb771bac3f4ad
+# 06 ebd8ef7b2bdac25614956a6e5105f43edb077331
+# 07 https://api.github.com/repos/jgphpc/mirror_test/pulls{/number}
     #
     # - name: env
     #   uses: managedkaos/print-env@master
