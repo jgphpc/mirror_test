@@ -46,9 +46,9 @@ jobs:
     # https://docs.github.com/en/actions/learn-github-actions/contexts
 
     - name: Dump for jg
-      run:
-        - echo "01 ${{ github.sha }}"
-        - echo "02 ${{ github.base_ref }}"
+      run: |
+        echo "01 ${{ github.sha }}"
+        # - echo "02 ${{ github.base_ref }}"
         # - echo "03 ${{ github.ref }}"
         # - echo "04 ${{ github.event.after }}"
         # - echo "05 ${{ github.event.before }}"
