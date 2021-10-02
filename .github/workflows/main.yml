@@ -32,7 +32,12 @@ jobs:
         echo "JG_GITHUB_RUN_ID=$GITHUB_RUN_ID"
         echo "JG_GITHUB_SHA=$GITHUB_SHA"
         echo "JG_GITHUB_BRANCH=${{ github.ref }}"
-
+    # https://docs.github.com/en/actions/learn-github-actions/contexts
+    - name: Dump for jg
+      run: |
+        echo "01 ${{ github.ref }}"
+        echo "01 $GITHUB_CONTEXT_SHA"
+    #
     # - name: env
     #   uses: managedkaos/print-env@master
 #     - name: trigger-gitlab
@@ -43,19 +48,12 @@ jobs:
 #         debug: true
 #         project_id: 1866
 #         ref: "main"
-    # https://docs.github.com/en/actions/learn-github-actions/contexts
-
-    - name: Dump for jg
-      run: |
-        echo "01 $GITHUB_CONTEXT_SHA"
-        echo "01 $GITHUB_CONTEXT_SHA"
         # - echo "02 ${{ github.base_ref }}"
         # - echo "03 ${{ github.ref }}"
         # - echo "04 ${{ github.event.after }}"
         # - echo "05 ${{ github.event.before }}"
         # - echo "06 ${{ github.event.head_commit.id }}"
         # - echo "07 ${{ github.event.repository.pulls_url }}"
-
         #echo "08=${{ github.event.repository }}"
         #echo "09=${{ github. }}"
         #echo "10=${{ github. }}"
@@ -85,4 +83,3 @@ jobs:
 #         MATRIX_CONTEXT: ${{ toJSON(matrix) }}
 #       run: echo "$MATRIX_CONTEXT"
 # }}}
-
