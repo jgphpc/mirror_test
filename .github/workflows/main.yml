@@ -16,34 +16,41 @@ on: [push]
 #          echo test, and deploy your project.
 # }}}
 
-# TRIGGER:
-# {{{ https://github.com/marketplace/actions/trigger-gitlab-ci
+# {{{ TRIGGER GITLAB CI:
+# https://docs.github.com/en/actions/learn-github-actions/contexts
 jobs:
   trigger:
     name: Trigger
     runs-on: ubuntu-latest
     # if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     steps:
+    # {{{ #checkout
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    # - uses: actions/checkout@v2
+    # - name: checkout
+    #   uses: actions/checkout@v2
+    # }}}
+    # {{{ env. variables
     - name: block_merging
       run: |
-        uname -a
         echo "JG_GITHUB_RUN_ID=$GITHUB_RUN_ID"
         echo "JG_GITHUB_SHA=$GITHUB_SHA"
         echo "JG_GITHUB_BRANCH=${{ github.ref }}"
-    # https://docs.github.com/en/actions/learn-github-actions/contexts
-    - name: Dump for jg
-      run: |
-        echo "ref ${{ github.ref }}"
-        echo "base_ref ${{ github.base_ref }}"
-        echo "e.before ${{ github.event.before }}"
-        echo "e.head_c.id ${{ github.event.head_commit.id }}"
-        echo "e.after ${{ github.event.after }}"
-        echo "sha $GITHUB_SHA ${{ github.sha }}"
-        echo "e.repo.pulls_url ${{ github.event.repository.pulls_url }}"
-        echo "github.event.number = ${{ github.event.number  }}"
-        echo "github.event.pull_request.number = ${{ github.event.pull_request.number }}"
+#     - name: Dump vars for jg
+#       run: |
+#         echo "ref ${{ github.ref }}"
+#         echo "base_ref ${{ github.base_ref }}"
+#         echo "e.before ${{ github.event.before }}"
+#         echo "e.head_c.id ${{ github.event.head_commit.id }}"
+#         echo "e.after ${{ github.event.after }}"
+#         echo "sha $GITHUB_SHA ${{ github.sha }}"
+#         echo "e.repo.pulls_url ${{ github.event.repository.pulls_url }}"
+#         echo "github.event.number = ${{ github.event.number  }}"
+#         echo "github.event.pull_request.number = ${{ github.event.pull_request.number }}"
+#     # https://github.com/marketplace/actions/environment-printer
+#     - name: env
+#       uses: managedkaos/print-env@master
+    # }}}
+    # {{{ https://github.com/marketplace/actions/find-current-pull-request
     # Find the PR associated with this push, if there is one.
     - uses: jwalton/gh-find-current-pr@v1
       id: findPr
@@ -51,60 +58,20 @@ jobs:
         # Can be "open", "closed", or "all".  Defaults to "open".
         state: open
     # This will echo "Your PR is 7", or be skipped if there is no current PR.
-    - run: echo "Your PR is ${PR}"
+    # - run: echo "Your PR is ${PR}"
+    - run: echo "JG_GITHUB_PR=${PR}"
       if: success() && steps.findPr.outputs.number
       env:
         PR: ${{ steps.findPr.outputs.pr }}
-# 01 refs/heads/pr_160340
-# 02 ebd8ef7b2bdac25614956a6e5105f43edb077331
-# 03 refs/heads/pr_160340
-# 04 ebd8ef7b2bdac25614956a6e5105f43edb077331
-# 05 ff962531810a0a90ba05f7c1ffbcb771bac3f4ad
-# 06 ebd8ef7b2bdac25614956a6e5105f43edb077331
-# 07 https://api.github.com/repos/jgphpc/mirror_test/pulls{/number}
-    #
-    # - name: env
-    #   uses: managedkaos/print-env@master
-#     - name: trigger-gitlab
-#       uses: appleboy/gitlab-ci-action@master
-#       with:
-#         host: "https://git.scicore.unibas.ch"
-#         token: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
-#         debug: true
-#         project_id: 1866
-#         ref: "main"
-        # - echo "02 ${{ github.base_ref }}"
-        # - echo "03 ${{ github.ref }}"
-        # - echo "04 ${{ github.event.after }}"
-        # - echo "05 ${{ github.event.before }}"
-        # - echo "06 ${{ github.event.head_commit.id }}"
-        # - echo "07 ${{ github.event.repository.pulls_url }}"
-        #echo "08=${{ github.event.repository }}"
-        #echo "09=${{ github. }}"
-        #echo "10=${{ github. }}"
-        #echo "11=${{ github. }}"
-#     - name: Dump GitHub context
-#       env:
-#         GITHUB_CONTEXT: ${{ toJSON(github) }}
-#       run: echo "$GITHUB_CONTEXT"
-#     - name: Dump job context
-#       env:
-#         JOB_CONTEXT: ${{ toJSON(job) }}
-#       run: echo "$JOB_CONTEXT"
-#     - name: Dump steps context
-#       env:
-#         STEPS_CONTEXT: ${{ toJSON(steps) }}
-#       run: echo "$STEPS_CONTEXT"
-#     - name: Dump runner context
-#       env:
-#         RUNNER_CONTEXT: ${{ toJSON(runner) }}
-#       run: echo "$RUNNER_CONTEXT"
-#     - name: Dump strategy context
-#       env:
-#         STRATEGY_CONTEXT: ${{ toJSON(strategy) }}
-#       run: echo "$STRATEGY_CONTEXT"
-#     - name: Dump matrix context
-#       env:
-#         MATRIX_CONTEXT: ${{ toJSON(matrix) }}
-#       run: echo "$MATRIX_CONTEXT"
+    # }}}
+# {{{ https://github.com/marketplace/actions/trigger-gitlab-ci
+    - name: trigger-gitlab
+      uses: appleboy/gitlab-ci-action@master
+      with:
+        host: "https://git.scicore.unibas.ch"
+        token: ${{ secrets.GITLAB_UNIBAS_PIPELINE_TRIGGER_TOKEN }}
+        debug: true
+        project_id: 1866
+        ref: "main"
+# }}}
 # }}}
